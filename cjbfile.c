@@ -91,7 +91,7 @@ char* SeeNextLetters(FILE *fPointer, int numLetters){
 
 // goes to the specified location
 // this method is meant to safe you the effort of typing out SEEK_SET
-int GoTo(FILE *fInput, int marker){
+int GoTo(FILE *fInput, long marker){
     return fseek(fInput, marker, SEEK_SET);
 }
 
