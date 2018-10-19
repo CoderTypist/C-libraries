@@ -26,7 +26,7 @@ char* SeeNextLetters(FILE *fPointer, int numLetters);
 /* Moves the file pointer to the location specified by marker
  * All this method does is call fseek
  */
-int GoTo(FILE *fPointer, int marker);
+int GoTo(FILE *fPointer, long marker);
 
 /* Moves the file pointer forward by the specified number of characters */
 int Advance(FILE *fPointer, int numLetters);
