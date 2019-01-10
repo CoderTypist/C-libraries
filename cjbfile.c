@@ -91,6 +91,22 @@ char* getLine(FILE *file){
     return line;
 }
 
+// prints all the contents  of the received File
+// Calls: getLine()
+void printFile(FILE *file){
+    
+    long marker = ftell(file);
+    
+    char *line = getLine(file);
+
+    while(NULL != line){
+        printf("%s\n", line);
+        line = getLine(file);
+    }
+
+    fseek(file, marker, SEEK_SET);
+}
+
 char GetRealC(FILE *fPointer){
     
     char c = getc(fPointer);
