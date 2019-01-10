@@ -179,6 +179,26 @@ int GoTo(FILE *fInput, long marker){
     return fseek(fInput, marker, SEEK_SET);
 }
 
+// Returns the number of characters in the specified file
+// '\n' and EOF are not counted
+// -1 is returned if the received file is NULL
+int fileCharacterCount(FILE *file){
+    
+    if(NULL == file){
+        return -1;
+    }
+    
+    int count = 0;
+    char *line = getLine(file);
+    
+    while(NULL != line){
+        count+=(int)strlen(line);
+        line = getLine(file);
+    }
+    
+    return count;
+}
+
 // Moves the file pointer ahead by the specified number of characters
 int Advance(FILE *fPointer, int numLetters){
     
