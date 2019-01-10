@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "cjbbyte.h"
+
 // returns the specified bit from within the char
 //
 // The bits for "A" are 0100 0001
