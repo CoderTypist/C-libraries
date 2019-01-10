@@ -7,6 +7,90 @@
 
 /* Written by Christian Bargraser October 2018 */
 
+// returns a String containing all the characters leading up to '\n'
+// returns NULL if the first character encountered is EOF
+// if the first character encountered is '\n', a
+// String containing '\0' is returned
+char* getLine(FILE *file){
+    
+    if(NULL == file){
+        printf("\n\n\tError: getLine: received file was NULL\n\n");
+        return NULL;
+    }
+    
+    // checks to see if the file is at EOF
+    char first;
+    first = getc(file);
+    if(EOF == first){
+        return NULL;
+    }
+
+    else{
+        putc(first, file);
+    }
+
+    char *line = NULL;
+    char cur;
+    int length = 0;
+    long marker = -1;
+
+    marker = ftell(file);
+    
+    // creates a string from the individual line
+    // length will count the newline character
+    // this extra 1 will be used to store the '\0' character
+    do{
+        
+        cur = getc(file);
+        length++;
+        
+        if(cur == EOF){
+            
+            // if getLine is called and the first character read
+            // is EOF, length will be 1, in which case, NULL 
+            // should be returned
+            if(1 == length){
+                return NULL;
+            }
+            
+            // length will always be at least 1, so if length is not 1
+            // there is text to be returned
+
+            line = (char*)malloc(length*sizeof(char));
+            fseek(file, marker, SEEK_SET);
+            int i;
+            for(i = 0; i < (length-1); i++){
+                line[i] = getc(file);
+            }
+
+            line[i] = '\0';
+            getc(file);
+
+            return line;
+        }
+
+        else if('\n' == cur){
+            break;
+        }
+
+    }while(true);
+
+    line = (char*)malloc(length*sizeof(char));
+
+    fseek(file, marker, SEEK_SET);
+    
+    // length will always be at least 1
+    // this is in the event that the next character
+    // was '\n' or EOF
+    int i;
+    for(i = 0; i < (length-1); i++){
+        line[i] = getc(file);
+    }
+    line[i] = '\0';
+
+    return line;
+}
+
 char GetRealC(FILE *fPointer){
     
     char c = getc(fPointer);
