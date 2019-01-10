@@ -9,6 +9,11 @@
  * String containing '\0' is returned
  */
 char* getLine(FILE *file);
+
+/* Prints the contents of the received file
+ * calls getLine()
+ */
+void printFile(FILE *file);
   
 /* Returns the next character in the file that is not '\n' */
 char GetRealC(FILE *fPointer);
