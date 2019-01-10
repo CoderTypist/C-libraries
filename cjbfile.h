@@ -35,6 +35,11 @@ char* SeeNextLetters(FILE *fPointer, int numLetters);
  */
 int GoTo(FILE *fPointer, long marker);
 
+/* Returns the number of characters within the specified file
+ * '\n' and EOF are not counted
+ */
+int fileCharacterCount(FILE *file);
+
 /* Moves the file pointer forward by the specified number of characters */
 int Advance(FILE *fPointer, int numLetters);
 
