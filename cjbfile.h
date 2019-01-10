@@ -3,6 +3,13 @@
 
 /* Written by Christian Bargraser October 2018 */
 
+/* returns a String containing all the characters leading up to '\n'
+ * returns NULL if the first character encountered is EOF
+ * if the first character encountered is '\n', a
+ * String containing '\0' is returned
+ */
+char* getLine(FILE *file);
+  
 /* Returns the next character in the file that is not '\n' */
 char GetRealC(FILE *fPointer);
 
