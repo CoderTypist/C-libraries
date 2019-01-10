@@ -3,7 +3,7 @@
 
 /* This program was inspired from a lecture I watched online by James McNellis
  * The video is engaging and very informative
- * I highly recommend the video for anyone wanted to learn about unicode
+ * I highly recommend the video for anyone wants to learn about unicode
  * https://www.youtube.com/watch?v=tOHnXt3Ycfo
  *
  * Some files are uncoded using the UTF8 format
