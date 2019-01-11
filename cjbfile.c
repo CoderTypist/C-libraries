@@ -26,7 +26,7 @@ char* getLine(FILE *file){
     }
 
     else{
-        putc(first, file);
+        ungetc(first, file);
     }
 
     char *line = NULL;
