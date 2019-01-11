@@ -229,6 +229,8 @@ int trueLineCharacterCountUTF8(char *line){
  */
 int trueFileCharacterCountUTF8(FILE *file){
     
+    long marker = ftell(file);
+    
     if(NULL == file){
         return -1;
     }
@@ -242,6 +244,8 @@ int trueFileCharacterCountUTF8(FILE *file){
         count+= trueLineCharacterCountUTF8(line);
         line = getLine(file);
     }
+    
+    fseek(file, marker, SEEK_SET);
     
     return count;
 }
