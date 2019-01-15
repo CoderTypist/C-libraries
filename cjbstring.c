@@ -10,25 +10,16 @@
 char* CharToString(char c){
     
     // creates a char array
-    char temp [2];
+    char *temp = (char*)malloc(2*sizeof(char));
+
+    if(NULL == temp){
+        printf("\n\n\tWarning: CharToString: Could not allocate memory for character '%c'\n\n", c);
+    }
+    
     temp[0] = c;
     temp[1] = '\0';
     
-    // copies the data from the array to the char pointer
-    // you can't just return temp
-    // it will tell you that you are returning the address
-    // of a local variable
-    // so what we do is dynically allocate memory for a String
-    // and copy the contents from temp to that String
-    char *new = (char*)malloc(2*sizeof(char));
-
-    if(NULL == new){
-        printf("\n\n\tWarning: CharToString: Could not allocate memory for character '%c'\n\n", c);
-    }
-
-    strcpy(new, temp);
-
-    return new;
+    return temp;
 }
 
 // Use this method if there exists the possibility of the received String not having
@@ -51,24 +42,21 @@ char* AppendChar(char *original, char c){
     // Memory is allocated for a new String
     // Why did I add 2?
     // strlen(original) + 1 for the new character + 1 for the '\0'
-    char *new = (char*)malloc( (strlen(original) + 2) * sizeof(char));
+    int oldLen = strlen(original);
+    char *temp = (char*)malloc( (oldLen + 2) * sizeof(char));
     
     // if memory could not be allocated for new
-    if(NULL == new){
+    if(NULL == temp){
         printf("\n\n\tWarning: AppendChar(): Could not allocate memory.");
         printf("\n\t\tAttempted to add character '%c' to String %s\n\n", c, original);
     }
 
     // The original word is copied into new
-    strcpy(new, original);
-
-    // c is added to new
-    char *letter = CharToString(c);
-    strcat(new, letter);
-    free(letter);
-
+    strcpy(temp, original);
+    temp[oldLen] = c;
+    temp[oldLen+1] = '\0';
     // The newly constructured String is returned
-    return new;
+    return temp;
 }
 
 // A more efficient version of AppendChar
@@ -95,7 +83,8 @@ int AppendCharToMallocd(char *original, char c){
         char *temp = original;
 
         // strlen(original) + '\0' + character being added
-        original = (char*)realloc(original, strlen(original)+2);
+        int oldLen = strlen(original);
+        original = (char*)realloc(original, oldLen+2);
 
         // if memory could be reallocated for original
         if(NULL == original){
@@ -104,9 +93,9 @@ int AppendCharToMallocd(char *original, char c){
             return -1;
         }
 
-        char *letter = CharToString(c);
-        strcat(original, letter);
-        free(letter);
+        original[oldLen] = c;
+        original[oldLen+1] = '\0';
+        
         return 0;
     }
 }
