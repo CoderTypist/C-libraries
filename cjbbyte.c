@@ -54,6 +54,31 @@ void printCharBits(char c){
     }
 }
 
+// returns a char* that has the bits in the received char
+char* getCharBits(char c){
+
+    char* byte = (char*)malloc(9*sizeof(char));
+    
+    if(NULL == byte){
+        printf("\n\n\tWarning: getCharBits(): Could not allocate memory for char* byte\n\n");
+        return NULL;
+    }
+    
+    int i;
+    for(i = 7; i >= 0; i--){
+        
+        if(1 == ( (c>>i)&1 ) ){
+            strcat(byte,"1");
+        }
+
+        else{
+            strcat(byte,"0");
+        }
+    }
+    
+    return byte;
+}
+
 // Prints all the bits that make up the String
 // The bits for '\0' are not printed
 // Printing continues on a new line after
@@ -99,6 +124,11 @@ void printStringBits(char *cp, int bytesPerLine){
 // bytesPerLine bytes have been printed
 void printnbytes(void *vp, int bytes, int bytesPerLine){
     
+    if(NULL == vp){
+        printf("\n\n\tWarning: printnbytes(): void *vp was NULL\n\n");
+        return;
+    }
+    
     int i;
     int j;
     char *byte = (char*)vp;
@@ -135,4 +165,29 @@ void printnbytes(void *vp, int bytes, int bytesPerLine){
     }
 
     printf("\n");
+}
+
+// returns a char* that has the bits in the specified size of memory
+// There is no spacing or new line characters
+char* getnbytes(void *vp, int bytes){
+    
+    if(NULL == vp){
+        printf("\n\n\tWarning: getnbytes(): void *vp was NULL\n\n");
+        return NULL;
+    }
+    
+    char* address = (char*)vp;
+    char* binary = (char*)malloc( (bytes*8)*sizeof(char) + 1 );
+    
+    if(NULL == binary){
+        printf("\n\n\tWarning: getnbytes(): Could not allocate memory for char* binary\n\n");
+        return NULL;
+    }
+    
+    int i;
+    for(i = 0; i < bytes; i++){
+        strcat(binary, getCharBits(address[i]));
+    }
+    
+    return binary;
 }
