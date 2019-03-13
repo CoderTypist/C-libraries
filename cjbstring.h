@@ -15,8 +15,8 @@ char* AppendChar(char *original, char c);
  * Returns -1 if original is NULL
  * You must use AppendChar if the String was not dynamically allocated
  * You should use AppendChar() if there exists the possibility that the 
- * received String was not dynamically allocated*/
- 
+ * received String was not dynamically allocated
+ */
 int AppendCharToMallocd(char* original, char c);
 
 /* Returns a String that starts at startIndex
@@ -36,7 +36,20 @@ char* CharToString(char c);
  */
 void nfree(void **dp);
 
-/* Thre received String is freed and set equal to NULL */
+/* The received String is freed and set equal to NULL */
 void StringFree(char **dp);
 
+/* Returns a char* that has the contents of char* one and 
+ * char* two appended to one another
+ */
+char* Combine(char* one, char* two);
+ 
+/* Combines a list of words sent as parameters */
+char* CombineAll(int numArg, ...);
+ 
+/* Combines a list of words sent as parameters.
+ * The specified delimiter is placed between words.
+ */
+char* CombineAllDelimited(char delimiter, int numArg, ...);
+ 
 #endif
