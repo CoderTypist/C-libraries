@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdarg.h>
 #include "cjbstring.h"
 
 /* Written by Christian Bargraser October 2018 */
