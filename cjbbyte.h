@@ -10,6 +10,10 @@ int bitFromChar(char c, int index);
  */
 void printCharBits(char c);
 
+/* returns a char* that has the bits in the received char
+ */
+char* getCharBits(char c)
+
 /* Prints all of the bits that make up a String
  * EOF is omitted when printing the bits
  * There is a space between every byte/8 bits
@@ -24,5 +28,9 @@ void printStringBits(char *cp, int bytesPerLine);
  * bytesPerLine bytes have been printed
  */
 void printnbytes(void *vp, int bytes, int bytesPerLine);
+
+/* returns a char* that has the bits in the specified size of memory
+ */
+char* getnbytes(void *vp, int bytes)
 
 #endif
