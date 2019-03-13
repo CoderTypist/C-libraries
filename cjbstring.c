@@ -340,7 +340,7 @@ char* CombineAllDelimited(char delimiter, int numArg, ...){
         }
         
         else{
-            printf("\n\n\tNote: CombineAll(): va_arg %d was NULL\n\n", i);
+            printf("\n\n\tNote: CombineAllDelimited(): va_arg %d was NULL\n\n", i);
         }
     }
     
