@@ -197,3 +197,196 @@ void StringFree(char **dp){
     free(*dp);
     *dp = NULL;
 }
+
+// char *one: The first String that will be added to the return String
+// char *two: The second String will will be added to the return String
+// If both are NULL, NULL is returned
+// If either one or two are NULL, the other is returned
+// If both are not NULL, a String containing the concatenated Strings is returned
+char* Combine(char* one, char* two){
+    
+    char* both = NULL;
+
+    // if both are not NULL
+    if(NULL != one && NULL != two){
+        
+        int totalLength = strlen(one) + strlen(two) + 1;
+        
+        both = (char*)malloc(totalLength*sizeof(char));
+        
+        if(NULL == both){
+            printf("\n\n\tWarning: Combine(): Could not allocate memory\n\n");
+            exit(1);
+        }
+        
+        strcat(both, one);
+        strcat(both, two);
+        return both;
+    }
+
+    // if one is NULL
+    else if(NULL == one && NULL != two){
+    
+        both = (char*)malloc((strlen(two)+1)*sizeof(char));
+        
+        if(NULL == both){
+            printf("\n\n\tWarning: Combine(): Could not allocate memory\n\n");
+            exit(1);
+        }
+        
+        strcpy(both, two);
+        return both;
+    }
+
+    // if two is NULL
+    else if(NULL != one && NULL == two){
+    
+        both = (char*)malloc((strlen(one)+1)*sizeof(char));
+        if(NULL == both){
+            printf("\n\n\tWarning: Combine(): Could not allocate memory\n\n");
+            exit(1);
+        }
+        strcpy(both, one);
+        return both;
+    }
+    
+    printf("\n\n\tNote: Combine(): Both char* that were received as parameters are NULL.\n\n");
+    return NULL;
+}
+
+// Combines the specified number of Strings
+// a new char* is created and returned
+// va_list lengthList and va_list wordList contain the same data
+// va_list lengthList is copied into va_list wordList
+// a copy of lengthList is made to make it possible to go through the list twice
+char* CombineAll(int numArg, ...){
+    
+    char* phrase = NULL;
+    int totalLength = 1; //1 accounts for the null byte
+    
+    va_list lengthList;
+    va_list wordList;
+    va_copy(wordList, lengthList);
+    
+    // finds the amount of space to allocate
+    va_start(lengthList, numArg);
+    int i;
+
+    for(i = 0; i < numArg; i++){
+        
+        char *curWord = va_arg(lengthList, char*);
+        
+        if(NULL != curWord){
+            totalLength += strlen(curWord);
+        }
+        
+        else{
+            printf("\n\n\tNote: CombineAll(): va_arg %d was NULL\n\n", i);
+        }
+    }
+    va_end(lengthList);
+    
+    // allocates memory
+    phrase = (char*)malloc(totalLength*sizeof(char));
+    
+    if(NULL == phrase){
+        printf("\n\n\tWarning: CombineAll(): Could not allocate memory.\n\n");
+        exit(1);
+    }
+    
+    // adds all of the words to the allocated space
+    va_start(wordList, numArg);
+    for(i = 0; i < numArg; i++){
+      
+      char *curWord = va_arg(wordList, char*);
+      
+      if(NULL != curWord){
+          strcat(phrase, curWord);
+      }
+    }
+    va_end(wordList);
+
+    return phrase;
+}
+
+// Combines the specified number of Strings
+// a new char* is created and returned
+// va_list lengthList and va_list wordList contain the same data
+// va_list lengthList is copied into va_list wordList
+// a copy of lengthList is made to make it possible to go through the list twice
+// The received delimiter will be inserted between all of the received words
+char* CombineAllDelimited(char delimiter, int numArg, ...){
+    
+    char* phrase = NULL;
+    int totalLength = 1; //1 accounts for the null byte
+    int numWords = 0;
+    
+    va_list lengthList;
+    va_list wordList;
+    va_copy(wordList, lengthList);
+    
+    // finds the amount of space to allocate
+    va_start(lengthList, numArg);
+    int i;
+    
+    for(i = 0; i < numArg; i++){
+        
+        printf("i: %d\n", i);
+        char *curWord = va_arg(lengthList, char*);
+        printf("%s\n", curWord);
+        if(NULL != curWord){
+            totalLength += strlen(curWord);
+            numWords++;
+        }
+        
+        else{
+            printf("\n\n\tNote: CombineAll(): va_arg %d was NULL\n\n", i);
+        }
+    }
+    
+    // numWords increases by one every time a non-NULL char pointer is found
+    // numWords will be used to allocate memory for the specified delimiter
+    // you only need numWords-1 delimiters
+    // However, if numWords is 0, subtracting 1 would make numWords -1, which
+    // would make totalLength incorrect
+    if(numWords != 0){
+        numWords--;
+    }
+    totalLength+=numWords;
+    
+    va_end(lengthList);
+    
+    // allocates memory
+    phrase = (char*)malloc(totalLength*sizeof(char));
+    
+    if(NULL == phrase){
+        printf("\n\n\tWarning: CombineAllDelimited(): Could not allocate memory.\n\n");
+        exit(1);
+    }
+    
+    bool firstWord = true;
+    char* del = CharToString(delimiter);
+    
+    // adds all of the words to the allocated space
+    va_start(wordList, numArg);
+    for(i = 0; i < numArg; i++){
+      
+      char *curWord = va_arg(wordList, char*);
+      
+      if(NULL != curWord){
+          
+          if(true == firstWord){
+              firstWord = false;
+          }
+          
+          else{
+              strcat(phrase, del);
+          }
+          
+          strcat(phrase, curWord);
+      }
+    }
+    va_end(wordList);
+    
+    return phrase;
+}
