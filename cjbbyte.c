@@ -191,3 +191,65 @@ char* getnbytes(void *vp, int bytes){
     
     return binary;
 }
+
+// An enhanced version of printnbytes() that accepts more parameters
+// to allow for increased functionality.
+// If bool addressColumn is true, the address of the first byte in the row will be printed.
+// If bool addressColumn is false, the address of the first byte will not be printed.
+// If bool asBits is true, the bits of the bytes will be printed.
+// If bool asBits is false, the hex value of the bytes will be printed. 
+void memPrint(void *vp, int bytes, int bytesPerLine, bool addressColumn, bool asBits){
+    
+    int i;
+    int j;
+    char *byte = (char*)vp;
+    char c;
+
+    // may print the address
+    if(true == addressColumn){
+      printf("%p ", byte);
+    }
+
+    for(i = 0; i < bytes; i++){
+        
+        // do not advance to the next byte during the first iteration
+        if(0 != i){
+
+            // may skip a line
+            if(0 == i%bytesPerLine){
+                printf("\n");
+                
+                // may print the address
+                if(true == addressColumn){
+                    printf("%p ", byte+i);
+                }
+            }
+        }
+        
+        // prints the byte
+        if(true == asBits){
+            printCharBits(byte[i]);
+        }
+        
+        else{
+            printf("%X", byte[i]);
+        }
+
+        // prints a space between bytes
+        printf(" ");
+    }
+
+    printf("\n");
+}
+
+// calls memPrint() in such a way that the bits of bytes are printed
+// The address column will be printed
+void memBits(void *vp, int bytes, int bytesPerLine){
+    memPrint(vp, bytes, bytesPerLine, true, true);
+}
+
+// calls memPrint() in such a way that the hex value of bytes are printed
+// The address column will be printed
+void memHex(void *vp, int bytes, int bytesPerLine){
+    memPrint(vp, bytes, bytesPerLine, true, false);
+}
