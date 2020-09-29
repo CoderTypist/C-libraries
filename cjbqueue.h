@@ -1,3 +1,5 @@
+// Author: Christian Bargraser
+
 #ifndef _CJB_QUEUE_
 #define _CJB_QUEUE_
 
