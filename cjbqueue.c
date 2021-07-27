@@ -110,7 +110,7 @@ bool queue_set( queue *pQueue, int iIndex, void *pValue ) {
         return false;
     }
 
-    memcpy( ((char*)pQueue) + (iIndex * pQueue->iElementSize), pValue, pQueue->iElementSize);
+    memcpy( ((char*)pQueue->pList) + (iIndex * pQueue->iElementSize), pValue, pQueue->iElementSize);
     return true;
 }
 
